@@ -21,6 +21,12 @@ class Lists {
 
             val combinedList = randomList + countriesList
             println("combined List : $combinedList")
+
+            var i=0
+            while (i<combinedList.size ) {
+                println("combine lists: ${i} \n ${combinedList[i]}")
+                i++
+            }
         }
     }
 }

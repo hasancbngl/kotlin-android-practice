@@ -17,7 +17,12 @@ class Arrays {
             // short syntax of visitedCountries.contains(country)
             val visitedTurkey = country in visitedCountries
 
-            print(visitedTurkey)
+            println(visitedTurkey)
+
+            for(item in visitedCountries) {
+                println("visited country: $item")
+            }
+
         }
     }
 }

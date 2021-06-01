@@ -1,4 +1,5 @@
 fun main() {
 
-    Challange.changeDay()
+   Loops.printLoop()
+   Arrays.printArr()
 }
