@@ -1,3 +1,4 @@
 fun main() {
-    Funct.functions()
+   // Funct.functions()
+    Functions2.mainM()
 }
