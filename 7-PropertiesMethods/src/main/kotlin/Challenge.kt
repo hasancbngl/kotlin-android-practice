@@ -13,7 +13,25 @@ class Challenge {
     Fill it with any magical ingredients you like!*/
 
     class Wizard(var firstName: String, var lastName: String) {
-        val fullName = "$firstName $lastName"
+        var fullName: String
+            get() = "$firstName $lastName"
+            set(newFullName) {
+                val names = newFullName.split(" ")
+                if (names.size != 2) {
+                    println("$newFullName is not a proper full name for a Wizard.")
+                } else {
+                    firstName = names.first()
+                    lastName = names.last()
+                }
+            }
+
+        companion object {
+            var commonMagicalIngredients = mutableListOf<String>(
+                "Eye of Haystack Needle",
+                "The Force",
+                "Wow-Wow Sauce!"
+            )
+        }
     }
 
     companion object {
@@ -23,6 +41,14 @@ class Challenge {
 
             wizard.lastName = "Skywalker"
             println(wizard.fullName)
+
+            wizard.fullName = "Jack walker"
+            wizard.fullName = "ThePunisher"
+            wizard.fullName = "On The Road"
+            println("First name: ${wizard.firstName} LastName: ${wizard.lastName} Magical ingredients: ${Wizard.commonMagicalIngredients}")
+
+            Wizard.commonMagicalIngredients.add("Meow of Cat")
+            println(Wizard.commonMagicalIngredients)
         }
     }
 }
