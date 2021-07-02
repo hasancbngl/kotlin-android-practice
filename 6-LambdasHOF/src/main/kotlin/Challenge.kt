@@ -30,19 +30,39 @@ val students = arrayOf(chris, sam, catie, andrea)
 class Challenge {
     companion object {
         fun challenge() {
-             /*:
-             Challenge 1 - `forEach` & `map`
-             There are two `for` loops below.
-             Rewrite one of them using `forEach` and the other with `map` */
+            /*:
+            Challenge 1 - `forEach` & `map`
+            There are two `for` loops below.
+            Rewrite one of them using `forEach` and the other with `map` */
 
             for (student in students) {
                 student.earnExtraCredit()
             }
+            //with forEach
+            students.forEach { student ->
+                println("old grade: ${student.grade}")
+                student.earnExtraCredit()
+                println("new grade: ${student.grade}")
+            }
+            // students.forEach { it.earnExtraCredit() }
 
             val classLibraryBooks: MutableList<List<String>> = mutableListOf()
             for (student in students) {
                 classLibraryBooks.add(student.libraryBooks)
             }
+            println(classLibraryBooks)
+            val classLibraryBooks2 = students.map { it.libraryBooks }
+            println(classLibraryBooks2)
+
+
+            /*:
+             Challenge 2 - mapNotNull
+            Create a list of student pets */
+            //mapnotnull throw the null values
+            val petList = students.mapNotNull { it.pet }
+            val petList2 = students.map { it.pet }
+            println(petList2)
+            println(petList)
         }
     }
 }
