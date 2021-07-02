@@ -1,3 +1,3 @@
 fun main() {
-    CustomTypes.costomType()
+    Challenge2.main()
 }
