@@ -1,3 +1,3 @@
 fun main() {
-    Challenge2.main()
+    Challenge3.main()
 }
