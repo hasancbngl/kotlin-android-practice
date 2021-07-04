@@ -8,18 +8,36 @@ open class Student(
     firstName: String, lastName: String,
     var grades: MutableList<Grade> = mutableListOf<Grade>()
 ) : Person(firstName, lastName) {
+    open var isEligible = true
 
-    fun recordGrade(grade: Grade) {
+    //open fun means a function can be overridden by subclass
+    open fun recordGrade(grade: Grade) {
         grades.add(grade)
     }
 }
 
 class BandMember(firstName: String, lastName: String) : Student(firstName, lastName) {
     var minimumPractiseTime: Int = 3
+
+    override var isEligible: Boolean = true
+        //none will return true if none of the grades match the condition
+        get() = grades.none() { it.letter == 'F' }
+
+    override fun recordGrade(grade: Grade) {
+        //super.record means does what  usually does in this case adding the grade to grades property.
+        super.recordGrade(grade)
+        if (!isEligible) println("No more performing for  ${fullName()}! Study, Study, Study.")
+    }
 }
 
 class StudentAthlete(firstName: String, lastName: String) : Student(firstName, lastName) {
-    var isEligible = false
+
+    override fun recordGrade(grade: Grade) {
+        //super.record means does what  usually does in this case adding the grade to grades property.
+        super.recordGrade(grade)
+        isEligible = grades.filter { it.letter == 'F' }.size < 3
+        if (!isEligible) println("${fullName()} Can't play in the big game! Time to study more.")
+    }
 }
 
 fun main() {
@@ -36,4 +54,13 @@ fun main() {
     val robotics = Grade(courseName = "Robotics", letter = 'A', credits = 3.0)
     jane.recordGrade(robotics)
     println(jane.grades)
+
+    val utterFaliureGrade = Grade("Being a regular Human", 'F', 2.0)
+    victor.recordGrade(utterFaliureGrade)
+    victor.recordGrade(utterFaliureGrade)
+    victor.recordGrade(utterFaliureGrade)
+
+    println(victor.grades)
+    marty.recordGrade(utterFaliureGrade)
+    println("${marty.fullName()} is eligible ${marty.isEligible}")
 }
