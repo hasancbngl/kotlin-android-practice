@@ -1,39 +1,49 @@
 /*
 Challenge - Transform SimpleDate into an Enum Class!
 - Make it an Enum Class and call it `Month` instead of `SimpleDate`
-- Turn that months array into the enum cases
-- Get the monthsUntilJingleBells and monthsUntilHalloweenDecorations methods working again
+- Turn that Month array into the enum cases
+- Get the MonthUntilJingleBells and MonthUntilHalloweenDecorations methods working again
 - Write a new property named `season` with a custom getter that will return the season of the year
 for each month. (Maybe model `Season` as another Enum Class?)
 */
 
-class SimpleDate(var month: String) {
-    companion object {
-        val months = arrayOf(
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
-        )
+enum class Season {
+    Winter, Spring, Summer, Autumn
+}
+
+enum class Month {
+    January, February, March, April, May, June,
+    July, August, September, October, November, December;
+
+    val season: Season
+        get() =
+            when (this) {
+                December, January, February -> Season.Winter
+                March, April, May -> Season.Spring
+                June, July, August -> Season.Summer
+                September, October, November -> Season.Autumn
+            }
+
+    fun MonthUntilJingleBells(): Int {
+        return December.ordinal - this.ordinal
     }
 
-    fun monthsUntilJingleBells(): Int {
-        return months.indexOf("December") - months.indexOf(month)
-    }
+    fun MonthUntilHalloweenDecorations(): Int {
+        val halloweenStart = September
+        val halloweenEnd = October
 
-    fun monthsUntilHalloweenDecorations(): Int {
-        val currentMonth = SimpleDate.months.indexOf(month)
-        val halloweenStart = SimpleDate.months.indexOf("September")
-        val halloweenEnd = SimpleDate.months.indexOf("October")
-
-        return if (currentMonth in 0..halloweenStart) {
-            halloweenStart - currentMonth
-        } else if (currentMonth in halloweenStart..halloweenEnd) {
-            0
-        } else {
-            halloweenStart + (12 - currentMonth)
+        return when (this) {
+            in January..halloweenStart -> halloweenStart.ordinal - this.ordinal
+            in halloweenStart..halloweenEnd -> 0
+            else -> halloweenStart.ordinal + values().count() - this.ordinal
         }
     }
 }
 
 fun main() {
-
+    val current = Month.July
+    println(current.MonthUntilJingleBells())
+    println(current.MonthUntilHalloweenDecorations())
+    println(current.season)
+    println(Month.September.season)
 }
