@@ -1,6 +1,7 @@
 sealed class AcceptedCurrency {
     abstract val valueInDollars: Float
     var amount = 0.0f
+
     class Dollar : AcceptedCurrency() {
         override val valueInDollars = 1.0f
     }
@@ -10,7 +11,7 @@ sealed class AcceptedCurrency {
     }
 
     class Crypto : AcceptedCurrency() {
-        override val valueInDollars = 3.485745f
+        override val valueInDollars = 3415.445f
     }
 
     val name: String
@@ -21,12 +22,31 @@ sealed class AcceptedCurrency {
                 is Crypto -> "FCoin"
             }
 
-    fun totalValueInDollars() : Float {
+    fun totalValueInDollars(): Float {
         return amount * valueInDollars
+    }
+
+    companion object {
+        fun checkSuffecientFunds(costInDollars: Float, currentFunds: List<AcceptedCurrency>): Boolean {
+            val totalFundsInDollars = currentFunds.fold(0.0f) { accumulator, currency ->
+                accumulator + currency.valueInDollars
+            }
+            return totalFundsInDollars >= costInDollars
+        }
     }
 }
 
 fun main() {
+    val currency2 = AcceptedCurrency.Crypto()
+    currency2.amount = .27541f
+    val dollars = AcceptedCurrency.Dollar()
+    dollars.amount = 2000f
+
+    val sufficientBalance =
+        AcceptedCurrency.checkSuffecientFunds(1000f, listOf(currency2, dollars))
+    println("You ${if (sufficientBalance) "have" else "don't "} enough money to buy that item! ")
+
+    println("------------------------------")
     val currency = AcceptedCurrency.Crypto()
     println("you got some ${currency.name}!!")
     currency.amount = .457f
